@@ -14,13 +14,16 @@
     </div>
   
     <!-- Timer -->
-    <div>
-        timer here....
-    </div>
+    <div class="timer">{{ timerDisplay }}</div>
   
     <!-- Start Button -->
-    <button class="button" >Start</button>
+    <button class="button" (click)="toggleTimer()">{{ isRunning ? 'Stop' : 'Start' }}</button>
   
+    <!-- Reset Button -->
+    <button class="button" (click)="resetTimer()">
+      Reset
+    </button>
+    
     <!-- Tap for Tempo -->
     <button class="button">Tap for Tempo</button>
   </div>

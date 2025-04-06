@@ -9,7 +9,7 @@
     <!-- Icon Buttons -->
     <div class="icon-buttons">
       <button class="icon-button" >&#8722;</button> <!-- minus -->
-      <button class="icon-button play-button" >&#9658;</button> <!-- play -->
+      <button class="icon-button play-button" (click)="playClickSound()">&#9658;</button> <!-- play -->
       <button class="icon-button" >&#43;</button> <!-- plus -->
     </div>
   
@@ -23,7 +23,7 @@
     <button class="button" (click)="resetTimer()">
       Reset
     </button>
-    
+
     <!-- Tap for Tempo -->
     <button class="button">Tap for Tempo</button>
   </div>

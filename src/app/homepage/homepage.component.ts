@@ -83,4 +83,22 @@ export class HomepageComponent {
   stopMetronome() {
     clearInterval(this.metronomeInterval);
   }
+
+  increaseBPM() {
+    this.bpm++;
+    this.restartMetronomeIfPlaying();
+  }
+  
+  decreaseBPM() {
+    if (this.bpm > 20) { // optional lower limit
+      this.bpm--;
+      this.restartMetronomeIfPlaying();
+    }
+  }
+  restartMetronomeIfPlaying() {
+    if (this.isMetronomePlaying) {
+      this.stopMetronome();
+      this.startMetronome();
+    }
+  }  
 }

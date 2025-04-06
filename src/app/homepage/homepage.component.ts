@@ -11,6 +11,9 @@ export class HomepageComponent {
 
   timerDisplay: string = '00:00:00'; //displayed on screen
   isRunning: boolean = false; //flag to check if timer is running
+  bpm: number = 120;
+
+  metronomeInterval: any; 
 
   private startTime!: number;  // start time in milliseconds
   private timerInterval: any; // interval ID for the timer
@@ -57,5 +60,27 @@ export class HomepageComponent {
   
   playClickSound() {
     this.clickSound.play();
+  }
+
+  isMetronomePlaying: boolean = false;
+
+  startMetronome() {
+     const interval = 60000 / this.bpm; 
+  this.metronomeInterval = setInterval(() => {
+    this.playClickSound();
+  }, interval);
+  }
+  
+  toggleMetronome() {
+    if (this.isMetronomePlaying) {
+      this.stopMetronome();
+    } else {
+      this.startMetronome();
+    }
+    this.isMetronomePlaying = !this.isMetronomePlaying;
+  }
+
+  stopMetronome() {
+    clearInterval(this.metronomeInterval);
   }
 }

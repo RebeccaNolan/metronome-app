@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Howl } from 'howler';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })

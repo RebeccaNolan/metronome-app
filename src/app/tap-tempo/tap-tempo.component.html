@@ -7,10 +7,10 @@
     
     <div class="main-content">
         <!-- circle -->
-        <div class="bpm-circle">Circle</div>
+        <div class="bpm-circle">{{bpm != null ? bpm  : 'Tap'}}</div>
         <!-- tap button -->
         <button class="tap-button" (click)="handleTap()">Tap</button>
-        <div class="bpm-display">{{bpm || '--'}} BPM</div>
+        <!-- <div class="bpm-display">{{bpm || '--'}} BPM</div> -->
     </div>
 </div>
 

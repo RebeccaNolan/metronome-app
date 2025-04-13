@@ -58,3 +58,10 @@
     justify-content: center;
     flex-grow: 1;
   }
+
+  .bpm-display {
+    font-size: 32px;
+    color: white;
+    margin-top: 20px;
+  }
+  

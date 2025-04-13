@@ -9,7 +9,8 @@
         <!-- circle -->
         <div class="bpm-circle">Circle</div>
         <!-- tap button -->
-        <button class="tap-button">Tap</button>
+        <button class="tap-button" (click)="handleTap()">Tap</button>
+        <div class="bpm-display">{{bpm || '--'}} BPM</div>
     </div>
 </div>
 

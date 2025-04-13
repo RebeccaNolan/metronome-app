@@ -35,4 +35,9 @@ export class TapTempoComponent {
       this.bpm = Math.round(60000 / averageInterval); // Convert interval to BPM
     }
   }
+  resetTapTempo() {
+    this.tapTime = [];
+    this.bpm = null
+  }
+  
 }

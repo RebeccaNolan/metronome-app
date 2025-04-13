@@ -7,10 +7,12 @@
     
     <div class="main-content">
         <!-- circle -->
-        <div class="bpm-circle">{{bpm != null ? bpm  : 'Tap'}}</div>
+        <div class="bpm-circle">{{bpm != null ? bpm  : '--'}}</div>
         <!-- tap button -->
         <button class="tap-button" (click)="handleTap()">Tap</button>
-        <!-- <div class="bpm-display">{{bpm || '--'}} BPM</div> -->
+        <!-- Reset Button -->
+        <button class="tap-reset-button" (click)="resetTapTempo()">Reset</button>
+
     </div>
 </div>
 

@@ -44,7 +44,7 @@
 .tap-button {
     background-color: #c29eff;
     border: none;
-    padding: 15px 30px;
+    padding: 10px 25px;
     font-size: 18px;
     color: white;
     border-radius: 0.5rem;
@@ -58,6 +58,18 @@
     justify-content: center;
     flex-grow: 1;
   }
+
+  .tap-reset-button {
+    background-color: #c29eff;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
 
   /* .bpm-display {
     font-size: 32px;

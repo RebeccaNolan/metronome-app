@@ -1,13 +1,21 @@
 <div class="container">
     <div class="top-bar">
-      <button class="menu-button">☰</button>
+      <button class="menu-button" (click)="toggleMenu()">☰</button>
+      <!-- Dropdown Menu -->
+    <div class="menu" *ngIf="menuOpen">
+      <p>Select Time Signature:</p>
+      <button (click)="setTimeSignature('4/4')">4/4</button>
+      <button (click)="setTimeSignature('3/4')">3/4</button>
+      <button (click)="setTimeSignature('6/8')">6/8</button>
+
+      <!-- (Optional) Display selected time signature -->
+      <p class="time-signature-display">Time Signature: {{ timeSignature }}</p>
     </div>
+</div>
   
     <!-- BPM Circle -->
     <div class="bpm-circle">{{ bpm }}</div>
 
-
-  
     <!-- Icon Buttons -->
     <div class="icon-buttons">
       <button class="icon-button" (click)="decreaseBPM()">&#8722;</button> <!-- minus -->
@@ -29,4 +37,6 @@
     <!-- Tap for Tempo -->
     <button class="button" routerLink="/tap-tempo">Tap for Tempo</button>
   </div>
+
+  
   

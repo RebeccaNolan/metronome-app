@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Howl } from 'howler';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -102,4 +104,23 @@ export class HomepageComponent {
       this.startMetronome();
     }
   }  
+
+  constructor(private router: Router) { 
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state && state['tappedBPM']) {
+      this.bpm = state['tappedBPM'];
+    }
+  }
+
+  //menuOptions: boolean = false;
+  menuOpen: boolean = false; 
+  timeSignature: string = '4/4'; // Default time signature
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+  setTimeSignature(signature: string) {
+    this.timeSignature = signature;
+    this.menuOpen = false; // Close the menu after selecting an option
+  }
 }

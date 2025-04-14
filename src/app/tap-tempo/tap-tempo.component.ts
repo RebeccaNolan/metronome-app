@@ -14,7 +14,9 @@ export class TapTempoComponent {
   constructor(private router: Router) { }
 
   goBack() {
-    this.router.navigate(['']); 
+    this.router.navigate([''], {
+      state: { tappedBPM: this.bpm }
+    });
   }
 
   tapTime: number[] = [];

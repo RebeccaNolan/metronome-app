@@ -22,6 +22,24 @@ export class HomepageComponent {
   private timerInterval: any; // interval ID for the timer
   private elapsedTime: number = 0; 
 
+  menuOpen: boolean = false; 
+  timeSignature: string = '4/4'; // Default time signature
+
+  currentBeat: number = 0; 
+  get beatsPerMeasure(): number {
+    return parseInt(this.timeSignature.split('/')[0], 10); 
+  }
+
+  strongClickSound = new Howl({
+    src: ['assets/click_louder.wav'],
+    volume: 1.0
+  });
+  
+  playStrongClickSound() {
+    this.strongClickSound.play();
+  }
+  
+
 // This function is called when the user clicks the button to start/stop the timer.
 // It checks if the timer is already running. If it is, it stops the timer and clears the interval.
   toggleTimer() {
@@ -68,10 +86,18 @@ export class HomepageComponent {
   isMetronomePlaying: boolean = false;
 
   startMetronome() {
-     const interval = 60000 / this.bpm; 
-  this.metronomeInterval = setInterval(() => {
-    this.playClickSound();
-  }, interval);
+    const interval = 60000 / this.bpm;
+    this.currentBeat = 0;
+  
+    this.metronomeInterval = setInterval(() => {
+      if (this.currentBeat === 0) {
+        this.playStrongClickSound(); // First beat
+      } else {
+        this.playClickSound(); // Regular beat
+      }
+  
+      this.currentBeat = (this.currentBeat + 1) % this.beatsPerMeasure;
+    }, interval);
   }
   
   toggleMetronome() {
@@ -85,6 +111,7 @@ export class HomepageComponent {
 
   stopMetronome() {
     clearInterval(this.metronomeInterval);
+    this.currentBeat = 0;
   }
 
   increaseBPM() {
@@ -111,10 +138,6 @@ export class HomepageComponent {
       this.bpm = state['tappedBPM'];
     }
   }
-
-  //menuOptions: boolean = false;
-  menuOpen: boolean = false; 
-  timeSignature: string = '4/4'; // Default time signature
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

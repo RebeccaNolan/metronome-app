@@ -23,19 +23,22 @@
       <button class="icon-button" (click)="increaseBPM()">&#43;</button> <!-- plus -->
     </div>
   
-    <!-- Timer -->
-    <div class="timer">{{ timerDisplay }}</div>
-  
-    <!-- Start Button -->
-    <button class="button" (click)="toggleTimer()">{{ isRunning ? 'Stop' : 'Start' }}</button>
-  
-    <!-- Reset Button -->
-    <button class="button" (click)="resetTimer()">
-      Reset
-    </button>
+    <div class="button-stack">
+       <!-- Timer -->
+      <div class="timer">{{ timerDisplay }}</div>
+    
+      <!-- Start Button -->
+      <button class="button start-button" (click)="toggleTimer()">{{ isRunning ? 'Stop' : 'Start' }}</button>
+    
+      <!-- Reset Button -->
+      <button class="button reset-button" (click)="resetTimer()">
+        Reset
+      </button>
 
-    <!-- Tap for Tempo -->
-    <button class="button" routerLink="/tap-tempo">Tap for Tempo</button>
+      <!-- Tap for Tempo -->
+      <button class="button tempo-button" routerLink="/tap-tempo">Tap for Tempo</button>
+    </div>
+   
   </div>
 
   

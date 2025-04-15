@@ -24,8 +24,9 @@
               "src/assets",
               "src/favicon.ico",
               {
-                "glob": "**/*",
-                "input": "public"
+                "glob": "firebase-messaging-sw.js",
+                "input": "./",
+                "output": "/"
               }
             ],
             "styles": [

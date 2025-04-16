@@ -3,10 +3,14 @@ import { Howl } from 'howler';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-homepage',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -120,7 +124,7 @@ export class HomepageComponent {
   }
   
   decreaseBPM() {
-    if (this.bpm > 20) { // optional lower limit
+    if (this.bpm > 20) { 
       this.bpm--;
       this.restartMetronomeIfPlaying();
     }
@@ -145,5 +149,63 @@ export class HomepageComponent {
   setTimeSignature(signature: string) {
     this.timeSignature = signature;
     this.menuOpen = false; // Close the menu after selecting an option
+  }
+
+  notificationsEnabled = true;
+
+  toggleNotifications() {
+    this.notificationsEnabled = !this.notificationsEnabled;
+    localStorage.setItem('notificationsEnabled', String(this.notificationsEnabled));
+  }
+
+  ngOnInit(): void {
+    this.notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true';
+    this.initFirebaseMessaging();
+
+    if (this.notificationsEnabled) {
+      this.tryToSendDailyReminder();
+    }
+  }
+
+  initFirebaseMessaging(): void {
+    const app = initializeApp(environment.firebaseConfig);
+    const messaging = getMessaging(app);
+
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        getToken(messaging, {
+          vapidKey: 'BCCYiJNmemmF_jCru0UJeJgatncI641O1Scrmqdkyv_hMCuN9zlxDm_yAUBRtpd0U8a7FYt4sWN0yQNXYrzF89w' // Replace this!
+        }).then(token => {
+          console.log('FCM Token:', token);
+        });
+      } else {
+        console.warn('Notification permission not granted');
+      }
+    });
+  }
+
+  tryToSendDailyReminder(): void {
+    const lastSent = localStorage.getItem('lastNotificationDate');
+    const today = new Date().toDateString();
+
+    if (lastSent !== today) {
+      this.sendLocalReminderNotification();
+      localStorage.setItem('lastNotificationDate', today);
+    }
+  }
+
+  sendLocalReminderNotification(): void {
+    if (Notification.permission === 'granted') {
+      navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg) {
+          reg.showNotification('🎵 Practice Time!', {
+            body: 'Don’t forget to practice today!',
+            icon: 'assets/icons/icon-192x192.png',
+            vibrate: [200, 100, 200],
+            tag: 'daily-reminder',
+          } as any); 
+        }
+      });
+    }
   }
 }

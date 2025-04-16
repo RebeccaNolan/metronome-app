@@ -7,9 +7,19 @@
       <button (click)="setTimeSignature('4/4')">4/4</button>
       <button (click)="setTimeSignature('3/4')">3/4</button>
       <button (click)="setTimeSignature('6/8')">6/8</button>
-
-      <!-- (Optional) Display selected time signature -->
+     
+      <!--  Display selected time signature -->
       <p class="time-signature-display">Time Signature: {{ timeSignature }}</p>
+       
+      <hr />
+
+      <div class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" [(ngModel)]="notificationsEnabled" (change)="toggleNotifications()">
+          <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">Notifications</span>
+      </div>
     </div>
 </div>
   
@@ -38,7 +48,6 @@
       <!-- Tap for Tempo -->
       <button class="button tempo-button" routerLink="/tap-tempo">Tap for Tempo</button>
     </div>
-   
   </div>
 
   

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { environment } from '../../environments/environment';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',
@@ -20,7 +21,9 @@ export class HomepageComponent {
   isRunning: boolean = false; //flag to check if timer is running
   bpm: number = 120;
 
-  metronomeInterval: any; 
+  // metronomeInterval: any; 
+  metronomeSubscription!: Subscription;
+
 
   private startTime!: number;  // start time in milliseconds
   private timerInterval: any; // interval ID for the timer
@@ -90,18 +93,17 @@ export class HomepageComponent {
   isMetronomePlaying: boolean = false;
 
   startMetronome() {
-    const interval = 60000 / this.bpm;
+    const intervalMs = 60000 / this.bpm;
     this.currentBeat = 0;
   
-    this.metronomeInterval = setInterval(() => {
+    this.metronomeSubscription = interval(intervalMs).subscribe(() => {
       if (this.currentBeat === 0) {
-        this.playStrongClickSound(); // First beat
+        this.playStrongClickSound();
       } else {
-        this.playClickSound(); // Regular beat
+        this.playClickSound();
       }
-  
       this.currentBeat = (this.currentBeat + 1) % this.beatsPerMeasure;
-    }, interval);
+    });
   }
   
   toggleMetronome() {
@@ -114,9 +116,12 @@ export class HomepageComponent {
   }
 
   stopMetronome() {
-    clearInterval(this.metronomeInterval);
+    if (this.metronomeSubscription) {
+      this.metronomeSubscription.unsubscribe();
+    }
     this.currentBeat = 0;
   }
+  
 
   increaseBPM() {
     this.bpm++;
@@ -134,7 +139,15 @@ export class HomepageComponent {
       this.stopMetronome();
       this.startMetronome();
     }
-  }  
+  } 
+  
+  ngOnDestroy(): void {
+    if (this.metronomeSubscription) {
+      this.metronomeSubscription.unsubscribe();
+      this.isMetronomePlaying = false;
+    }
+  }
+  
 
   constructor(private router: Router) { 
     const state = this.router.getCurrentNavigation()?.extras.state;
@@ -160,7 +173,7 @@ export class HomepageComponent {
 
   ngOnInit(): void {
     this.notificationsEnabled = localStorage.getItem('notificationsEnabled') === 'true';
-    this.initFirebaseMessaging();
+    // this.initFirebaseMessaging();
 
     if (this.notificationsEnabled) {
       this.tryToSendDailyReminder();
@@ -171,6 +184,7 @@ export class HomepageComponent {
     const app = initializeApp(environment.firebaseConfig);
     const messaging = getMessaging(app);
 
+    //promise to request permission for notifications
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
         getToken(messaging, {

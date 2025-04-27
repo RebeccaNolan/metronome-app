@@ -9,6 +9,9 @@
   font-family: 'Roboto', sans-serif;
   padding: 12px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
 }
 
 .menu-button {

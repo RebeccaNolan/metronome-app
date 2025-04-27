@@ -19,14 +19,17 @@ export class AppComponent {
   notificationsEnabled = true;
   token: string | null = null;
 
+  //Initialize Firebase messaging on app startup
   constructor() {
     this.initFirebaseMessaging();
   }
 
+  //set up Firebase messaging and notification permissions
   initFirebaseMessaging() {
     const app = initializeApp(environment.firebaseConfig);
     const messaging = getMessaging(app);
 
+    // Request permission to send notifications
     Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         getToken(messaging, {
@@ -40,11 +43,13 @@ export class AppComponent {
       }
     });
 
+    //Listen for foreground notifications
     onMessage(messaging, (payload) => {
       console.log('Foreground message received:', payload);
     });
   }
 
+  //Check every day at 6 PM to send a notification
   startDailyCheck() {
     const targetHour = 18; // 6 PM
     const targetMinute = 0;
@@ -57,6 +62,7 @@ export class AppComponent {
       const lastSent = localStorage.getItem('lastNotifDate');
       const today = now.toDateString();
 
+      // Check if the notification was already sent today
       if (
         this.notificationsEnabled &&
         hours === targetHour &&
@@ -71,6 +77,7 @@ export class AppComponent {
     }, 60000); // Check every minute
   }
 
+  // Show a notification
   showNotification(title: string, body: string) {
     new Notification(title, {
       body,

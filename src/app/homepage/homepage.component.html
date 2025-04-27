@@ -1,13 +1,15 @@
 <div class="container">
     <div class="top-bar">
       <button class="menu-button" (click)="toggleMenu()">☰</button>
+
       <!-- Dropdown Menu -->
-    <div class="menu" *ngIf="menuOpen">
+    <div class="menu mt-2" *ngIf="menuOpen">
       <p>Select Time Signature:</p>
-      <button (click)="setTimeSignature('4/4')">4/4</button>
-      <button (click)="setTimeSignature('3/4')">3/4</button>
-      <button (click)="setTimeSignature('6/8')">6/8</button>
-     
+      <div class="btn-group mb-2">
+        <button class="button" (click)="setTimeSignature('4/4')">4/4</button>
+        <button class="button" (click)="setTimeSignature('3/4')">3/4</button>
+        <button class="button" (click)="setTimeSignature('6/8')">6/8</button>
+      </div>
       <!--  Display selected time signature -->
       <p class="time-signature-display">Time Signature: {{ timeSignature }}</p>
        
@@ -24,14 +26,14 @@
 </div>
   
     <!-- BPM Circle -->
-    <div class="bpm-circle">{{ bpm }}</div>
+  <div class="bpm-circle my-3">{{ bpm }}</div>
 
-    <!-- Icon Buttons -->
-    <div class="icon-buttons">
-      <button class="icon-button" (click)="decreaseBPM()">&#8722;</button> <!-- minus -->
-      <button class="icon-button play-button" (click)="toggleMetronome()">&#9658;</button> <!-- play -->
-      <button class="icon-button" (click)="increaseBPM()">&#43;</button> <!-- plus -->
-    </div>
+     <!-- Icon Buttons -->
+  <div class="icon-buttons d-flex justify-content-center gap-2 my-2">
+    <button class="btn icon-button" (click)="decreaseBPM()">&#8722;</button>
+    <button class="btn icon-button play-button" (click)="toggleMetronome()">&#9658;</button>
+    <button class="btn icon-button" (click)="increaseBPM()">&#43;</button>
+  </div>
   
     <div class="button-stack">
        <!-- Timer -->

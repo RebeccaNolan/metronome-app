@@ -1,16 +1,18 @@
 <div class="container">
-    <!-- top bar -->
-    <div class="top-bar">
-        <button class="menu-button" (click)="goBack()">&#8592;</button>
+     <!-- top bar -->
+     <div class="top-bar w-100 d-flex justify-content-start mb-3">
+        <button class="btn btn-outline-light menu-button" (click)="goBack()">&#8592;</button>
     </div>
     
-    <div class="main-content">
+    <div class="main-content text-center">
         <!-- circle -->
-        <div class="bpm-circle">{{bpm != null ? bpm  : '--'}}</div>
+        <div class="bpm-circle my-4">{{ bpm != null ? bpm : '--' }}</div>
+
         <!-- tap button -->
-        <button class="tap-button" (click)="handleTap()">Tap</button>
-        <!-- Reset Button -->
-        <button class="tap-reset-button" (click)="resetTapTempo()">Reset</button>
+        <button class="btn tap-button my-2" (click)="handleTap()">Tap</button>
+
+        <!-- reset button -->
+        <button class="btn tap-reset-button my-2" (click)="resetTapTempo()">Reset</button>
     </div>
 </div>
 
